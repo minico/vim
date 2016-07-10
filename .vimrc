@@ -10,18 +10,20 @@ Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/a.vim'
 Plug 'vim-scripts/winmanager'
 Plug 'vim-scripts/minibufexpl.vim'
-Plug 'vim-scripts/The-NERD-Commenter'
-Plug 'vim-scripts/The-NERD-tree'
-Plug 'vim-scripts/Tagbar'
-Plug 'vim-scripts/EasyMotion'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'easymotion/vim-easymotion'
 Plug 'vim-scripts/taglist.vim'
 Plug 'vim-scripts/lookupfile'
 Plug 'vim-scripts/genutils'
-Plug 'vim-scripts/SuperTab'
+Plug 'ervandew/supertab'
 Plug 'vim-scripts/Mark'
 Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'vim-airline/vim-airline'
+Plug 'kien/ctrlp.vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -302,7 +304,7 @@ set mat=2
 
   "Format the statusline
   "set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
-  set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+  "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 
 """"""""""""""""""""""""""""""
 " Visual
@@ -370,13 +372,18 @@ set smarttab
    " minibuffer setting
    """"""""""""""""""""""""""""""
    "let loaded_minibufexplorer = 1         " *** Disable minibuffer plugin
-   let g:miniBufExplorerMoreThanOne = 2   " Display when more than 2 buffers
+    "use a workaround to hide the minibufexplorer;
+    "Actually, we want to use ctrlp to replace minibufExplorer;
+    "But we still need the window navigation functionality;
+    "so we try to use the workaround to hide it;
+   let g:miniBufExplorerMoreThanOne = 200  " Display when more than 2 buffers
    let g:miniBufExplSplitToEdge = 1       " Always at top
    let g:miniBufExplMaxSize = 3           " The max height is 3 lines
    let g:miniBufExplMapWindowNavVim = 1   " map CTRL-[hjkl]
    let g:miniBufExplUseSingleClick = 1    " select by single click
    let g:miniBufExplModSelTarget = 1      " Dont change to unmodified buffer
    let g:miniBufExplForceSyntaxEnable = 1 " force syntax on
+   let g:miniBufExplMapWindowNavVim = 1 
    "let g:miniBufExplVSplit = 25
    "let g:miniBufExplSplitBelow = 0
 
@@ -402,6 +409,7 @@ set smarttab
    nnoremap <silent> <F8> :NERDTreeToggle<CR>
    nnoremap <silent> <F9> :TagbarToggle<CR>
    let g:tagbar_left = 1
+   let g:tagbar_width = 30
    "let Tlist_Use_Right_Window = 1
 
    """"""""""""""""""""""""""""""
@@ -456,7 +464,20 @@ set smarttab
    nmap <silent> <leader>hr <Plug>MarkRegex
    vmap <silent> <leader>hr <Plug>MarkRegex
 
+   """"""""""""""""""""""""""""""
+   " ctrlp
+   """"""""""""""""""""""""""""""
+    let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|pyc)$'
+    "will search in current working dir by default;
+    "when pressing Ctrl+a, will search in the specified directory;
+    noremap <C-a> :CtrlP ~/code/<CR>
 
+   """"""""""""""""""""""""""""""
+   " aireline
+   """"""""""""""""""""""""""""""
+    "let g:airline#extensions#tabline#enabled = 1
+    "let g:airline#extensions#tabline#left_sep = ' '
+    "let g:airline#extensions#tabline#left_alt_sep = '|'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MISC
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
