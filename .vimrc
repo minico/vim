@@ -9,13 +9,10 @@
 Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/a.vim'
 Plug 'vim-scripts/winmanager'
-Plug 'vim-scripts/minibufexpl.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
 Plug 'easymotion/vim-easymotion'
-Plug 'vim-scripts/taglist.vim'
-Plug 'vim-scripts/lookupfile'
 Plug 'vim-scripts/genutils'
 Plug 'ervandew/supertab'
 Plug 'vim-scripts/Mark'
@@ -23,6 +20,7 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'kien/ctrlp.vim'
 
 " Add plugins to &runtimepath
@@ -124,10 +122,6 @@ filetype indent off
 let mapleader = ","
 let g:mapleader = ","
 
-"Fast saving
-nmap <silent> <leader>ww :w!<cr>
-"nmap <silent> <leader>wf :w!<cr>
-
 "Fast remove highlight search
 nmap <silent> <leader><cr> :noh<cr>
 
@@ -192,7 +186,6 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 "Set font
 "if MySys() == "linux"
 "  set gfn=Monospace\ 11
@@ -292,10 +285,8 @@ set mat=2
   """"""""""""""""""""""""""""""
   " Statusline
   """"""""""""""""""""""""""""""
-  "Always hide the statusline
-  "set laststatus=0
-  "position of stastus bar
-  set laststatus=1
+  "Always show the statusline
+  set laststatus=2
 
   function! CurDir()
      let curdir = substitute(getcwd(), '/home/easwy/', "~/", "g")
@@ -309,7 +300,6 @@ set mat=2
 """"""""""""""""""""""""""""""
 " Visual
 """"""""""""""""""""""""""""""
-
 "Switch to current dir
 map <silent> <leader>cd :cd %:p:h<cr>
 
@@ -355,62 +345,26 @@ set smarttab
 " Plugin configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
    """"""""""""""""""""""""""""""
-   " file explorer setting
+   " Tabbar setting
    """"""""""""""""""""""""""""""
-   "Split vertically
-   let g:explVertical=1
-   "Window size
-   let g:explWinSize=35
-   let g:explSplitLeft=1
-   let g:explSplitBelow=1
-   "Hide some files
-   let g:explHideFiles='^\.,.*\.class$,.*\.swp$,.*\.pyc$,.*\.swo$,\.DS_Store$'
-   "Hide the help thing..
-   let g:explDetailedHelp=0
-
-   """"""""""""""""""""""""""""""
-   " minibuffer setting
-   """"""""""""""""""""""""""""""
-   "let loaded_minibufexplorer = 1         " *** Disable minibuffer plugin
-    "use a workaround to hide the minibufexplorer;
-    "Actually, we want to use ctrlp to replace minibufExplorer;
-    "But we still need the window navigation functionality;
-    "so we try to use the workaround to hide it;
-   let g:miniBufExplorerMoreThanOne = 200  " Display when more than 2 buffers
-   let g:miniBufExplSplitToEdge = 1       " Always at top
-   let g:miniBufExplMaxSize = 3           " The max height is 3 lines
-   let g:miniBufExplMapWindowNavVim = 1   " map CTRL-[hjkl]
-   let g:miniBufExplUseSingleClick = 1    " select by single click
-   let g:miniBufExplModSelTarget = 1      " Dont change to unmodified buffer
-   let g:miniBufExplForceSyntaxEnable = 1 " force syntax on
-   let g:miniBufExplMapWindowNavVim = 1 
-   "let g:miniBufExplVSplit = 25
-   "let g:miniBufExplSplitBelow = 0
-
-   autocmd BufRead,BufNew :call UMiniBufExplorer
-
-   """"""""""""""""""""""""""""""
-   " taglist setting
-   """"""""""""""""""""""""""""""
-   if MySys() == "windows"
-     let Tlist_Ctags_Cmd = 'ctags'
-   elseif MySys() == "linux"
-     "let Tlist_Ctags_Cmd = '/usr/bin/ctags'
-     "let Tlist_Ctags_Cmd = '/Users/xjzhang/bin/ctags'
-   endif
-   let Tlist_Show_One_File=1
-   let Tlist_Exit_OnlyWindow=1
-   "hide ctags menu item
-   let Tlist_Show_Menu = 0
-   " set tags file path
-   set tags=~/bin/tags
-   "set catags path for taglist
-   "let Tlist_Ctags_Cmd = 'D:\Vim\vim71\ctags.exe'
-   nnoremap <silent> <F8> :NERDTreeToggle<CR>
    nnoremap <silent> <F9> :TagbarToggle<CR>
    let g:tagbar_left = 1
    let g:tagbar_width = 30
-   "let Tlist_Use_Right_Window = 1
+   let g:tagbar_ctags_bin = '~/bin/ctags'
+
+   """"""""""""""""""""""""""""""
+   " NERD-Tree setting
+   """"""""""""""""""""""""""""""
+   nnoremap <silent> <F8> :NERDTreeToggle<CR>
+   "let g:NERDTreeDirArrowExpandable = '+'
+   "let g:NERDTreeDirArrowCollapsible = '-'
+   let g:NERDTreeDirArrows=0
+   "auto load NERD-Tree
+   "autocmd vimenter * NERDTree 
+   "close NERD-Tree when the last file closed;
+   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif    
+   let g:NERDTreeChDirMode       = 2
+   let g:ctrlp_working_path_mode = 'rw'
 
    """"""""""""""""""""""""""""""
    " winmanager setting
@@ -423,35 +377,14 @@ set smarttab
    autocmd BufWinEnter \[Buf\ List\] setl nonumber
 
    """"""""""""""""""""""""""""""
-   " lookupfile setting
+   " grep setting
    """"""""""""""""""""""""""""""
-   let g:LookupFile_MinPatLength = 2
-   let g:LookupFile_PreserveLastPattern = 0
-   let g:LookupFile_PreservePatternHistory = 0
-   let g:LookupFile_AlwaysAcceptFirst = 1
-   let g:LookupFile_AllowNewFiles = 0
-   let g:LookupFile_TagExpr = '"/Users/xjzhang/bin/filenametags"'
-   nmap <silent> <F5> <plug>LookupFile<cr>
-
-   " lookup file with ignore case
-   function! LookupFile_IgnoreCaseFunc(pattern)
-       let _tags = &tags
-       try
-           let &tags = eval(g:LookupFile_TagExpr)
-           let newpattern = '\c' . a:pattern
-           let tags = taglist(newpattern)
-       catch
-           echohl ErrorMsg | echo "Exception: " . v:exception | echohl NONE
-           return ""
-       finally
-           let &tags = _tags
-       endtry
-
-       " Show the matches for what is typed so far.
-       let files = map(tags, 'v:val["filename"]')
-       return files
-   endfunction
-   let g:LookupFile_LookupFunc = 'LookupFile_IgnoreCaseFunc'
+   "F3 grep the current word
+   nnoremap <silent> <F3> :Rgrep<CR>
+   nnoremap <silent> <F4> :GrepBuffer<CR>
+   let Grep_Default_Filelist = '*.[ch]* *.m *.mm *.java *.rc *.as' 
+   let Grep_Skip_Files = '*.bak *~ *.o *.a *.obj' 
+   let Grep_Skip_Dirs = '.svn .git' 
 
 
    """"""""""""""""""""""""""""""
@@ -471,23 +404,28 @@ set smarttab
     "will search in current working dir by default;
     "when pressing Ctrl+a, will search in the specified directory;
     noremap <C-a> :CtrlP ~/code/<CR>
+    "noremap <C-[> :CtrlPBuffer<CR>
+    nmap <leader>b :CtrlPBuffer<CR>
 
    """"""""""""""""""""""""""""""
    " aireline
    """"""""""""""""""""""""""""""
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline_theme='dark'
     "let g:airline#extensions#tabline#enabled = 1
     "let g:airline#extensions#tabline#left_sep = ' '
     "let g:airline#extensions#tabline#left_alt_sep = '|'
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    "Move among splitted windows
+    nnoremap <C-J> <C-W><C-J>
+    nnoremap <C-K> <C-W><C-K>
+    nnoremap <C-L> <C-W><C-L>
+    nnoremap <C-H> <C-W><C-H>
+
 " MISC
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-   "Quickfix
-   nmap <leader>cn :cn<cr>
-   nmap <leader>cp :cp<cr>
-   nmap <leader>cw :cw 10<cr>
-   "nmap <leader>cc :botright lw 10<cr>
-   "map <c-u> <c-l><c-j>:q<cr>:botright cw 10<cr>
-
+   " Fast grep
    function! s:GetVisualSelection()
        let save_a = @a
        silent normal! gv"ay
@@ -497,7 +435,6 @@ set smarttab
        return var
    endfunction
 
-   " Fast grep
    nmap <silent> <leader>lv :lv /<c-r>=expand("<cword>")<cr>/ %<cr>:lw<cr>
    vmap <silent> <leader>lv :lv /<c-r>=<sid>GetVisualSelection()<cr>/ %<cr>:lw<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -510,12 +447,6 @@ set guioptions+=r
 "hide left slide bar
 set guioptions-=L
 
-"F12 open new buffer for c\h
-nnoremap <silent> <F12> :A<CR>
-"F3 grep the current word
-nnoremap <silent> <F3> :Grep<CR>
-nnoremap <C-@>s :Grep<CR>
-nmap <C-W> :set wrap<CR>
 
 "source $HOME/.vim/plugin/mark.vim
 nnoremap <silent> <F2> :source $HOME/.vim/plugged/Mark/plugin/mark.vim<CR>
