@@ -22,6 +22,9 @@ Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-surround'
+Plug 'gregsexton/MatchTag'
+Plug 'Raimondi/delimitMate'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -350,7 +353,7 @@ set smarttab
    nnoremap <silent> <F9> :TagbarToggle<CR>
    let g:tagbar_left = 1
    let g:tagbar_width = 30
-   let g:tagbar_ctags_bin = '~/bin/ctags'
+   "let g:tagbar_ctags_bin = '~/bin/ctags'
 
    """"""""""""""""""""""""""""""
    " NERD-Tree setting
@@ -365,16 +368,13 @@ set smarttab
    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif    
    let g:NERDTreeChDirMode       = 2
    let g:ctrlp_working_path_mode = 'rw'
+   noremap <f5> :NERDTreeFind<cr> "locate current buffer in NERD-TREE
 
    """"""""""""""""""""""""""""""
    " winmanager setting
    """"""""""""""""""""""""""""""
-   "let g:winManagerWindowLayout = 'NERDTree|Tagbar'
+   "let g:winManagerWindowLayout = 'NERDTree,Tagbar'
    "let g:winManagerWindowLayout = "TagList"
-   let g:winManagerWidth = 30
-   let g:defaultExplorer = 0
-   nmap <silent> wm :WMToggle<cr>
-   autocmd BufWinEnter \[Buf\ List\] setl nonumber
 
    """"""""""""""""""""""""""""""
    " grep setting
@@ -410,18 +410,18 @@ set smarttab
    """"""""""""""""""""""""""""""
    " aireline
    """"""""""""""""""""""""""""""
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline_theme='dark'
-    "let g:airline#extensions#tabline#enabled = 1
-    "let g:airline#extensions#tabline#left_sep = ' '
-    "let g:airline#extensions#tabline#left_alt_sep = '|'
+   set t_Co=256
+   let g:airline#extensions#tabline#enabled = 1
+   let g:airline#extensions#tabline#enabled = 1
+   "let g:airline#extensions#tabline#enabled = 1
+   "let g:airline#extensions#tabline#left_sep = ' '
+   "let g:airline#extensions#tabline#left_alt_sep = '|'
 
-    "Move among splitted windows
-    nnoremap <C-J> <C-W><C-J>
-    nnoremap <C-K> <C-W><C-K>
-    nnoremap <C-L> <C-W><C-L>
-    nnoremap <C-H> <C-W><C-H>
+   "Move among splitted windows
+   nnoremap <C-J> <C-W><C-J>
+   nnoremap <C-K> <C-W><C-K>
+   nnoremap <C-L> <C-W><C-L>
+   nnoremap <C-H> <C-W><C-H>
 
 " MISC
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
