@@ -8,7 +8,6 @@
 " Make sure you use single quotes
 Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/a.vim'
-Plug 'vim-scripts/winmanager'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
@@ -20,11 +19,14 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline-themes'
 Plug 'kien/ctrlp.vim'
-Plug 'tpope/vim-surround'
-Plug 'gregsexton/MatchTag'
-Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-surround' "插入环绕括号，引号
+Plug 'Raimondi/delimitMate' "括号，引号等自动完成
+Plug 'rdnetto/YCM-Generator'
+Plug 'tdcdev/ycm_simple_conf'
+Plug 'godlygeek/tabular'
+Plug 'nathanaelkane/vim-indent-guides'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -52,7 +54,7 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " 跳转到定义处
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>gd:YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>	"force recomile with syntastic
 " nnoremap <leader>lo :lopen<CR>	"open locationlist
 " nnoremap <leader>lc :lclose<CR>	"close locationlist
@@ -81,6 +83,7 @@ let g:ycm_filetype_blacklist = {
       \ 'nerdtree' : 1,
       \}
 
+"let g:ycm_simple_conf_active = 0
 "============================= Config YouCompleteMe end =================================
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -109,11 +112,8 @@ if MySys() == "windows"
    "set fileencodings=ucs-bom,utf-8,gb18030,cp936,big5,euc-jp,euc-kr,latin1
 endif
  
-"Enable filetype plugin
-filetype plugin off
-"filetype plugin on
+filetype plugin on
 filetype indent off
-"filetype indent on
 
 "Set to auto read when a file is changed from the outside
 "set autoread
@@ -350,31 +350,24 @@ set smarttab
    """"""""""""""""""""""""""""""
    " Tabbar setting
    """"""""""""""""""""""""""""""
-   nnoremap <silent> <F9> :TagbarToggle<CR>
+   nnoremap <silent> tl :TagbarToggle<CR>
    let g:tagbar_left = 1
    let g:tagbar_width = 30
-   "let g:tagbar_ctags_bin = '~/bin/ctags'
+   let g:tagbar_ctags_bin = '~/bin/ctags'
 
    """"""""""""""""""""""""""""""
    " NERD-Tree setting
    """"""""""""""""""""""""""""""
-   nnoremap <silent> <F8> :NERDTreeToggle<CR>
+   nnoremap <silent> fe :NERDTreeToggle<CR>
    "let g:NERDTreeDirArrowExpandable = '+'
    "let g:NERDTreeDirArrowCollapsible = '-'
    let g:NERDTreeDirArrows=0
-   "auto load NERD-Tree
-   "autocmd vimenter * NERDTree 
+   let g:NERDTreeWinSize = 40
    "close NERD-Tree when the last file closed;
    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif    
    let g:NERDTreeChDirMode       = 2
    let g:ctrlp_working_path_mode = 'rw'
-   noremap <f5> :NERDTreeFind<cr> "locate current buffer in NERD-TREE
-
-   """"""""""""""""""""""""""""""
-   " winmanager setting
-   """"""""""""""""""""""""""""""
-   "let g:winManagerWindowLayout = 'NERDTree,Tagbar'
-   "let g:winManagerWindowLayout = "TagList"
+   noremap <F5> :NERDTreeFind<cr> "locate current buffer in NERD-TREE
 
    """"""""""""""""""""""""""""""
    " grep setting
@@ -417,11 +410,19 @@ set smarttab
    "let g:airline#extensions#tabline#left_sep = ' '
    "let g:airline#extensions#tabline#left_alt_sep = '|'
 
+   """"""""""""""""""""""""""""""
    "Move among splitted windows
+   """"""""""""""""""""""""""""""
    nnoremap <C-J> <C-W><C-J>
    nnoremap <C-K> <C-W><C-K>
    nnoremap <C-L> <C-W><C-L>
    nnoremap <C-H> <C-W><C-H>
+   """"""""""""""""""""""""""""""
+   " Indent GuideLine 
+   """"""""""""""""""""""""""""""
+    set ts=4 sw=4 et
+    "let g:indent_guides_start_level = 2
+    let g:indent_guides_guide_size = 1
 
 " MISC
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
