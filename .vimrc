@@ -12,21 +12,20 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
 Plug 'easymotion/vim-easymotion'
-Plug 'vim-scripts/genutils'
+"Plug 'vim-scripts/genutils'
 Plug 'ervandew/supertab'
 Plug 'vim-scripts/Mark'
 Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
-Plug 'kien/ctrlp.vim'
+Plug 'vim-airline/vim-airline' "美化状态栏
+Plug 'kien/ctrlp.vim' "快速搜索文件
 Plug 'tpope/vim-surround' "插入环绕括号，引号
 Plug 'Raimondi/delimitMate' "括号，引号等自动完成
-Plug 'rdnetto/YCM-Generator'
-Plug 'tdcdev/ycm_simple_conf'
-Plug 'godlygeek/tabular'
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'rdnetto/YCM-Generator' "根据Makefile自动生成YCM配置文件
+Plug 'tdcdev/ycm_simple_conf' "在工程根目录下面建立一个xml文件，在里面加上头文件路径和宏定义等
+Plug 'godlygeek/tabular' "提供对齐功能，例如根据等号对齐
+Plug 'Yggdroot/indentLine'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -37,21 +36,18 @@ call plug#end()
 set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
 inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"	"回车即选中当前项
-"上下左右键的行为 会显示其他信息
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 " resolve confilct between YCM and snipetUtils
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType    = '<C-n>'
+"let g:SuperTabCrMapping               = 0
 
 "" better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+nnoremap <silent> <leader>ue :UltiSnipsEdit<cr>
 
 " 跳转到定义处
 nnoremap <leader>gd:YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -103,6 +99,9 @@ endfunction
  
 "Sets how many lines of history VIM har to remember
 set history=500
+
+"Align tab with |, for space align, use plugin indentLine
+set list lcs=tab:\|\ 
 
 " Chinese
 if MySys() == "windows"
@@ -417,12 +416,21 @@ set smarttab
    nnoremap <C-K> <C-W><C-K>
    nnoremap <C-L> <C-W><C-L>
    nnoremap <C-H> <C-W><C-H>
+
    """"""""""""""""""""""""""""""
    " Indent GuideLine 
    """"""""""""""""""""""""""""""
     set ts=4 sw=4 et
-    "let g:indent_guides_start_level = 2
-    let g:indent_guides_guide_size = 1
+    let g:indent_guides_start_level = 2
+    let g:indent_guides_guide_size = 2
+
+   """"""""""""""""""""""""""""""
+   " Tabular 
+   """"""""""""""""""""""""""""""
+   nmap <Leader>a= :Tabularize /=<CR>
+   vmap <Leader>a= :Tabularize /=<CR>
+   nmap <Leader>a: :Tabularize /:\zs<CR>
+   vmap <Leader>a: :Tabularize /:\zs<CR>
 
 " MISC
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
