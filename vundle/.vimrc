@@ -4,6 +4,9 @@
 " Last Change: 11/13/09 09:17:57
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "=================================== Config Vundle begin ===============================
+" run the flowing command to install Vundle firstly, then run PluginInstall.
+" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"
 "Get out of VI's compatible mode..
 set nocompatible "required by Vundle
 filetype off "required by Vundle
@@ -54,7 +57,7 @@ filetype plugin indent on    " required
 
 " Make sure you use single quotes
 Plugin 'vim-scripts/grep.vim'
-Plugin 'rking/ag.vim'
+Plugin 'rking/ag.vim' "比grep更快的搜索插件，依赖于ag命令
 Plugin 'vim-scripts/a.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
